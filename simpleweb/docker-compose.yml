@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  web-image:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  web-container:
+    container_name: my-web-container
+    image: simpleweb_web-image:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./config
+        target: /usr/src/app
+
+      - type: bind
+        source: ./frontend    
+        target: /public
+    command: npm start --prefix /usr/src/app/
